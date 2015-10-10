@@ -1,9 +1,7 @@
 package xyz.alto.debtfriend.registration.view;
 
 import android.content.Context;
-import android.support.v7.internal.view.menu.MenuBuilder;
 import android.util.AttributeSet;
-import android.widget.RelativeLayout;
 
 import se.dromt.papper.PapperView;
 
@@ -14,5 +12,10 @@ public class RegistrationView extends PapperView {
 
     public RegistrationView(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
     }
 }

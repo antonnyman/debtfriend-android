@@ -26,9 +26,8 @@ public class MainActivity extends AppCompatActivity implements PapperActivity {
         mViewManager = ViewManager.create((ViewGroup) findViewById(R.id.main_container), this);
 
         if(getLastCustomNonConfigurationInstance() == null) {
-            PapperView.Builder registrationViewBuilder = new PapperView.Builder(R.layout.view_registration);
-
-            mViewManager.addViewBuilder(registrationViewBuilder).build();
+            mViewManager.addViewBuilder(new PapperView.Builder(R.layout.view_registration))
+                    .createView();
         } else {
             mViewManager.rebuildViewStack(getLastCustomNonConfigurationInstance());
         }
@@ -37,7 +36,8 @@ public class MainActivity extends AppCompatActivity implements PapperActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements PapperActivity {
 
     @Override
     public ViewManager getViewManager() {
-        return null;
+        return mViewManager;
     }
 
     @Override
