@@ -3,11 +3,12 @@ package xyz.alto.debtfriend.main;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
-import se.dromt.papper.PapperActivity;
+import se.dromt.papper.activity.PapperActivity;
 import se.dromt.papper.PapperView;
 import se.dromt.papper.ViewManager;
 import xyz.alto.debtfriend.R;
@@ -35,24 +36,16 @@ public class MainActivity extends AppCompatActivity implements PapperActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-
-        //getMenuInflater().inflate(R.menu.menu_main, menu);
+        mViewManager.setMenu(menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if(mViewManager.menuItemSelected(item)) {
+            Log.d(getClass().getName(), "clicked correct");
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
