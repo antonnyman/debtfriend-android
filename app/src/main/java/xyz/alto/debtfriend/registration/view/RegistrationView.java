@@ -6,14 +6,15 @@ import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-import se.dromt.papper.PapperActivity;
+import se.dromt.papper.activity.OnCreateOptionsMenuListener;
+import se.dromt.papper.activity.PapperActivity;
 import se.dromt.papper.PapperView;
 import xyz.alto.debtfriend.R;
 
 /**
  * Created by isak on 2015-10-10.
  */
-public class RegistrationView extends PapperView implements PapperActivity.OnCreateOptionsMenuListener {
+public class RegistrationView extends PapperView implements OnCreateOptionsMenuListener {
 
     public RegistrationView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -30,6 +31,10 @@ public class RegistrationView extends PapperView implements PapperActivity.OnCre
         super.onAttachedToWindow();
 
         ((AppCompatActivity) getContext()).getSupportActionBar().setTitle("hej");
+
+        getViewManager(getContext())
+                .addViewBuilder(new PapperView.Builder(R.layout.view_test))
+                .createView();
     }
 
     @Override

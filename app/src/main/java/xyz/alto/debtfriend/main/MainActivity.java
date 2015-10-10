@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
-import se.dromt.papper.PapperActivity;
+import se.dromt.papper.activity.PapperActivity;
 import se.dromt.papper.PapperView;
 import se.dromt.papper.ViewManager;
 import xyz.alto.debtfriend.R;
@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements PapperActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+
+        //return mViewManager.onOptionsMenuItemSelected(MenuItem item);
 
         return super.onOptionsItemSelected(item);
     }
