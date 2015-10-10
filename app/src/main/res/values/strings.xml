@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">DebtFriend</string>
     <string name="action_settings">Settings</string>
+
+    <!-- View start -->
+    <string name="view_start_button_register">Register</string>
+    <string name="view_start_button_login">Log in</string>
+
+    <!-- Registration view -->
+    <string name="view_registration_input_username">Username</string>
+    <string name="view_registration_input_email">Email address</string>
+    <string name="view_registration_input_password">Password</string>
+    <string name="view_registration_input_button">Create account</string>
+
+    <!-- Login view -->
+    <string name="view_login_input_username_or_email">Username or email address</string>
+    <string name="view_login_input_password">Password</string>
+    <string name="view_login_button_login">Log in</string>
 </resources>
