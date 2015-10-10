@@ -1,24 +1,23 @@
 package xyz.alto.debtfriend.registration.view;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
-import se.dromt.papper.activity.OnCreateOptionsMenuListener;
-import se.dromt.papper.activity.PapperActivity;
 import se.dromt.papper.PapperView;
+import se.dromt.papper.activity.OnOptionsMenuListener;
 import xyz.alto.debtfriend.R;
 
 /**
  * Created by isak on 2015-10-10.
  */
-public class RegistrationView extends PapperView implements OnCreateOptionsMenuListener {
+public class RegistrationView extends PapperView implements OnOptionsMenuListener {
 
     public RegistrationView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        // Gör inget här
+        setOnCreateOptionsMenuListener(this);
     }
 
     @Override
@@ -29,16 +28,18 @@ public class RegistrationView extends PapperView implements OnCreateOptionsMenuL
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-
-        ((AppCompatActivity) getContext()).getSupportActionBar().setTitle("hej");
-
-        getViewManager(getContext())
-                .addViewBuilder(new PapperView.Builder(R.layout.view_test))
-                .createView();
     }
 
     @Override
     public void onOptionsMenuCreated(Menu menu) {
-        new MenuInflater(getContext()).inflate(R.menu.menu_main, menu);
+        new MenuInflater(getContext()).inflate(R.menu.menu_test, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_about) {
+            return true;
+        }
+        return false;
     }
 }
