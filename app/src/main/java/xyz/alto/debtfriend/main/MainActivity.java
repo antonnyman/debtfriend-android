@@ -1,15 +1,20 @@
-package xyz.alto.debtfriend;
+package xyz.alto.debtfriend.main;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
-public class MainActivity extends AppCompatActivity {
+import se.dromt.papper.PapperActivity;
+import se.dromt.papper.PapperView;
+import se.dromt.papper.ViewManager;
+import xyz.alto.debtfriend.R;
+
+public class MainActivity extends AppCompatActivity implements PapperActivity {
+
+    private ViewManager mViewManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +23,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        mViewManager = ViewManager.create((ViewGroup) findViewById(R.id.main_container), this);
+
+        if(getLastCustomNonConfigurationInstance() == null) {
+            PapperView.Builder registrationViewBuilder = new PapperView.Builder(R.layout.view_registration);
+
+            mViewManager.addViewBuilder(registrationViewBuilder).build();
+        } else {
+            mViewManager.rebuildViewStack(getLastCustomNonConfigurationInstance());
+        }
     }
 
     @Override
@@ -48,5 +54,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return mViewManager.saveViewStack();
+    }
+
+    @Override
+    public void onBackPressed() {
+        mViewManager.goBack();
+    }
+
+    @Override
+    public ViewManager getViewManager() {
+        return null;
+    }
+
+    @Override
+    public void close() {
+        finish();
     }
 }
