@@ -31,6 +31,18 @@ public class MainActivity extends AppCompatActivity implements PapperActivity {
         } else {
             mViewManager.rebuildViewStack(getLastCustomNonConfigurationInstance());
         }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     @Override
