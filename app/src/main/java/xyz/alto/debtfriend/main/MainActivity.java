@@ -3,6 +3,7 @@ package xyz.alto.debtfriend.main;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -35,9 +36,7 @@ public class MainActivity extends AppCompatActivity implements PapperActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-
-        //getMenuInflater().inflate(R.menu.menu_main, menu);
+        mViewManager.setMenu(menu);
         return true;
     }
 
