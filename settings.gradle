@@ -1,1 +1,2 @@
-include ':app'
+include ':app', ':papper'
+project(':papper').projectDir = new File(settingsDir, '../Papper/papper')
