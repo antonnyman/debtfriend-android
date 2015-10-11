@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements PapperActivity {
         mViewManager = ViewManager.create((ViewGroup) findViewById(R.id.main_container), this);
 
         if(getLastCustomNonConfigurationInstance() == null) {
-            mViewManager.addViewBuilder(new PapperView.Builder(R.layout.view_registration))
+            mViewManager.addViewBuilder(new PapperView.Builder(R.layout.view_start))
                     .createView();
         } else {
             mViewManager.rebuildViewStack(getLastCustomNonConfigurationInstance());

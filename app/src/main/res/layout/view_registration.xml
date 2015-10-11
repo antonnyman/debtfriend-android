@@ -3,10 +3,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/view_registration_text_view"
-        android:text="REGISTRATION VIEW"/>
+        android:orientation="vertical"
+        android:layout_margin="16dp">
+        <EditText
+            android:id="@+id/view_registration_input_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:hint="@string/view_registration_input_username"/>
+        <EditText
+            android:id="@+id/view_registration_input_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="8dp"
+            android:hint="@string/view_registration_input_email"/>
+        <EditText
+            android:id="@+id/view_registration_input_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:layout_marginBottom="8dp"
+            android:hint="@string/view_registration_input_password"/>
+
+        <Button
+            android:id="@+id/view_registration_input_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/view_registration_input_button"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_gravity="right" />
+    </LinearLayout>
 
 </xyz.alto.debtfriend.registration.view.RegistrationView>
