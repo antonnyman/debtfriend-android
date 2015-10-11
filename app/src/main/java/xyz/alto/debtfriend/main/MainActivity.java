@@ -8,9 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
-import se.dromt.papper.activity.PapperActivity;
 import se.dromt.papper.PapperView;
 import se.dromt.papper.ViewManager;
+import se.dromt.papper.activity.PapperActivity;
 import xyz.alto.debtfriend.R;
 
 public class MainActivity extends AppCompatActivity implements PapperActivity {
@@ -27,8 +27,7 @@ public class MainActivity extends AppCompatActivity implements PapperActivity {
         mViewManager = ViewManager.create((ViewGroup) findViewById(R.id.main_container), this);
 
         if(getLastCustomNonConfigurationInstance() == null) {
-            mViewManager.addViewBuilder(new PapperView.Builder(R.layout.view_start))
-                    .createView();
+            mViewManager.addView(new PapperView.Builder(R.layout.view_start));
         } else {
             mViewManager.rebuildViewStack(getLastCustomNonConfigurationInstance());
         }
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements PapperActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(mViewManager.menuItemSelected(item)) {
-            Log.d(getClass().getName(), "clicked correct");
             return true;
         }
         return super.onOptionsItemSelected(item);

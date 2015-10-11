@@ -2,23 +2,19 @@ package xyz.alto.debtfriend.api;
 
 import android.util.Log;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.internal.bind.DateTypeAdapter;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
-import java.util.Date;
 
 import okio.Buffer;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import xyz.alto.debtfriend.api.service.AltoService;
-import static xyz.alto.debtfriend.utils.Static.LOCALHOST;
+
+import static xyz.alto.debtfriend.api.utils.Static.LOCALHOST;
 
 /**
  * Created by Anton on 2015-10-10.

@@ -7,9 +7,7 @@ import android.widget.Button;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import se.dromt.papper.PapperActivity;
 import se.dromt.papper.PapperView;
-import se.dromt.papper.ViewManager;
 import xyz.alto.debtfriend.R;
 
 /**
@@ -17,8 +15,11 @@ import xyz.alto.debtfriend.R;
  */
 public class StartView extends PapperView {
 
-    @InjectView(R.id.view_start_button_register) Button mRegistrationButton;
-    @InjectView(R.id.view_start_button_login) Button mLoginButton;
+    @InjectView(R.id.view_start_button_register)
+    Button mRegistrationButton;
+
+    @InjectView(R.id.view_start_button_login)
+    Button mLoginButton;
 
     public StartView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -41,12 +42,12 @@ public class StartView extends PapperView {
     }
 
     @OnClick(R.id.view_start_button_register) void clickRegister() {
-        ViewManager mViewManager = ((PapperActivity) getContext()).getViewManager();
-        mViewManager.addViewBuilder(new PapperView.Builder(R.layout.view_registration)).createView();
+        getViewManager(getContext())
+                .addView(new PapperView.Builder(R.layout.view_registration));
     }
 
     @OnClick(R.id.view_start_button_login) void clickLogin() {
-        ViewManager mViewManager = ((PapperActivity) getContext()).getViewManager();
-        mViewManager.addViewBuilder(new PapperView.Builder(R.layout.view_login)).createView();
+        getViewManager(getContext())
+                .addView(new PapperView.Builder(R.layout.view_login));
     }
 }

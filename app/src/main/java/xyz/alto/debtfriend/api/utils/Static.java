@@ -1,4 +1,4 @@
-package xyz.alto.debtfriend.utils;
+package xyz.alto.debtfriend.api.utils;
 
 /**
  * Created by Anton on 2015-10-10.
