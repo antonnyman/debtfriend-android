@@ -10,7 +10,7 @@ Go to https://github.com/isaklilja/Papper and clone the project to the same fold
 
 Add to `settings.gradle` 
 ```
-include ':app', ':papper'
+include ':papper'
 project(':papper').projectDir = new File(settingsDir, '../Papper/papper')
 ```
 
