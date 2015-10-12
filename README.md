@@ -8,6 +8,11 @@ Go to https://github.com/isaklilja/Papper and clone the project to the same fold
 
 /StudioProjects/Papper
 
+Add to `settings.gradle` 
+```
+include ':app', ':papper'
+project(':papper').projectDir = new File(settingsDir, '../Papper/papper')
+```
 
 ## API Endpoints
 ### User
