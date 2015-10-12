@@ -3,9 +3,10 @@ package xyz.alto.debtfriend.registration.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 
@@ -14,8 +15,7 @@ import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
-import se.dromt.papper.PapperView;
-import se.dromt.papper.activity.OnOptionsMenuListener;
+import se.dromt.papper.ViewBuilder;
 import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
 import xyz.alto.debtfriend.api.model.User;
@@ -23,31 +23,30 @@ import xyz.alto.debtfriend.api.model.User;
 /**
  * Created by isak on 2015-10-10.
  */
-public class RegistrationView extends PapperView {
+public class RegistrationView extends LinearLayout {
 
-    public RegistrationView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public static class Builder extends ViewBuilder {
+        @Override
+        protected View build(Context context, ViewGroup container) {
+            return new RegistrationView(context);
+        }
     }
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        // Initera saker här
-        ButterKnife.inject(this);
-
+    public RegistrationView(Context context) {
+        super(context);
+        LayoutInflater.from(context).inflate(R.layout.view_registration, this, true);
+        init();
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        /* Om PapperView.Builder har skickats med argument (bundle) eller presenter (object),
-        kan de hämtas här med getArguments() och getPresenter() */
-
+    private void init() {
         RestClient restClient = new RestClient();
 
         User user = new User("pungmannen@pung.com", "pungster", "pung123123");
 
-        final Call<User> call = restClient.getAltoService().register(user);
+        final Call<User> call = restClient
+                .getAltoService()
+                .register(user);
+
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Response<User> response, Retrofit retrofit) {

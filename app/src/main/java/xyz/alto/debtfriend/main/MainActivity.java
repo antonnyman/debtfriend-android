@@ -3,15 +3,14 @@ package xyz.alto.debtfriend.main;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
-import se.dromt.papper.PapperView;
 import se.dromt.papper.ViewManager;
-import se.dromt.papper.activity.PapperActivity;
+import se.dromt.papper.PapperActivity;
 import xyz.alto.debtfriend.R;
+import xyz.alto.debtfriend.start.view.StartView;
 
 public class MainActivity extends AppCompatActivity implements PapperActivity {
 
@@ -27,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements PapperActivity {
         mViewManager = ViewManager.create((ViewGroup) findViewById(R.id.main_container), this);
 
         if(getLastCustomNonConfigurationInstance() == null) {
-            mViewManager.addView(new PapperView.Builder(R.layout.view_start));
+            mViewManager.addView(new StartView.Builder());
         } else {
             mViewManager.rebuildViewStack(getLastCustomNonConfigurationInstance());
         }

@@ -1,41 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xyz.alto.debtfriend.start.view.StartView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="16dp">
+    android:gravity="center">
 
-    <!-- Landing view, when an user is not registered or logged in. We should add some nice graphics here -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="264dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="16dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true">
-            <Button
-                android:id="@+id/view_start_button_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/view_start_button_register"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:layout_marginBottom="16dp"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
-                android:layout_gravity="center_horizontal" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_start_button_register"
+        android:text="@string/view_start_button_register"
+        android:padding="16dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_gravity="center_horizontal"/>
 
-            <Button
-                android:id="@+id/view_start_button_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/view_start_button_login"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"/>
-        </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_start_button_login"
+        android:text="@string/view_start_button_login"
+        android:padding="16dp"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_gravity="center_horizontal"/>
 
-
-    </RelativeLayout>
-
-</xyz.alto.debtfriend.start.view.StartView>
+</LinearLayout>

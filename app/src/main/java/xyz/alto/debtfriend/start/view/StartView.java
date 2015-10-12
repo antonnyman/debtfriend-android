@@ -1,53 +1,56 @@
 package xyz.alto.debtfriend.start.view;
 
 import android.content.Context;
-import android.util.AttributeSet;
-import android.widget.Button;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import se.dromt.papper.PapperView;
+import se.dromt.papper.ViewManager;
+import se.dromt.papper.PapperActivity;
+import se.dromt.papper.ViewBuilder;
 import xyz.alto.debtfriend.R;
+import xyz.alto.debtfriend.login.view.LoginView;
+import xyz.alto.debtfriend.registration.view.RegistrationView;
 
 /**
  * Created by Anton on 2015-10-10.
  */
-public class StartView extends PapperView {
+public class StartView extends LinearLayout {
 
-    @InjectView(R.id.view_start_button_register)
-    Button mRegistrationButton;
-
-    @InjectView(R.id.view_start_button_login)
-    Button mLoginButton;
-
-    public StartView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        // Gör inget här
+    public static class Builder extends ViewBuilder {
+        @Override
+        protected View build(Context context, ViewGroup container) {
+            return new StartView(context);
+        }
     }
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        // Initera saker här
+    public StartView(Context context) {
+        super(context);
+        LayoutInflater.from(context).inflate(R.layout.view_start, this, true);
+        init();
+    }
 
+    private void init() {
         ButterKnife.inject(this);
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        /* Om PapperView.Builder har skickats med argument (bundle) eller presenter (object),
-        kan de hämtas här med getArguments() och getPresenter() */
+    public ViewManager getViewManager(Context context) {
+        return ((PapperActivity) context).getViewManager();
     }
 
-    @OnClick(R.id.view_start_button_register) void clickRegister() {
+    @OnClick (R.id.view_start_button_register) void clickRegister() {
+        Log.d(getClass().getName(), "click!");
         getViewManager(getContext())
-                .addView(new PapperView.Builder(R.layout.view_registration));
+                .addView(new RegistrationView.Builder());
     }
 
-    @OnClick(R.id.view_start_button_login) void clickLogin() {
+    @OnClick (R.id.view_start_button_login) void clickLogin() {
+        Log.d(getClass().getName(), "click!");
         getViewManager(getContext())
-                .addView(new PapperView.Builder(R.layout.view_login));
+                .addView(new LoginView.Builder());
     }
 }
