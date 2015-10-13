@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="16dp">
+    android:layout_margin="16dp"
+    android:id="@+id/view_start">
 
     <!-- Landing view, when an user is not registered or logged in. We should add some nice graphics here -->
     <RelativeLayout

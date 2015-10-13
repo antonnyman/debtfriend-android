@@ -18,7 +18,7 @@ public class LoginView extends PapperView {
     protected void onFinishInflate() {
         super.onFinishInflate();
         // Initera saker här
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
     }
 

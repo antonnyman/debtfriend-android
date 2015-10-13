@@ -11,6 +11,7 @@
     <string name="view_registration_input_email">Email address</string>
     <string name="view_registration_input_password">Password</string>
     <string name="view_registration_input_button">Create account</string>
+    <string name="view_registration_loading">Loading</string>
 
     <!-- Login view -->
     <string name="view_login_input_username_or_email">Username or email address</string>

@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Button;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import se.dromt.papper.PapperView;
 import xyz.alto.debtfriend.R;
@@ -15,10 +15,10 @@ import xyz.alto.debtfriend.R;
  */
 public class StartView extends PapperView {
 
-    @InjectView(R.id.view_start_button_register)
+    @Bind(R.id.view_start_button_register)
     Button mRegistrationButton;
 
-    @InjectView(R.id.view_start_button_login)
+    @Bind(R.id.view_start_button_login)
     Button mLoginButton;
 
     public StartView(Context context, AttributeSet attrs) {
@@ -31,7 +31,7 @@ public class StartView extends PapperView {
         super.onFinishInflate();
         // Initera saker här
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     @Override

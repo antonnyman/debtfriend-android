@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DebtFriend.iml" filepath="$PROJECT_DIR$/DebtFriend.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/debtfriend-android.iml" filepath="$PROJECT_DIR$/debtfriend-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Papper/papper/papper.iml" filepath="$PROJECT_DIR$/../Papper/papper/papper.iml" />
     </modules>
   </component>

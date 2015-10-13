@@ -14,7 +14,7 @@ import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import xyz.alto.debtfriend.api.service.AltoService;
 
-import static xyz.alto.debtfriend.api.utils.Static.LOCALHOST;
+import static xyz.alto.debtfriend.utils.Static.ANTONS_TELEFON;
 
 /**
  * Created by Anton on 2015-10-10.
@@ -42,7 +42,7 @@ public class RestClient {
                 Buffer buffer = new Buffer();
                 request.body().writeTo(buffer);
                 String body = buffer.readUtf8();
-                Log.d("Send this mathafacka", body);
+                Log.d("Send this", body);
 
                 // Customize or return the response
                 return response;
@@ -50,7 +50,7 @@ public class RestClient {
         });
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(LOCALHOST)
+                .baseUrl(ANTONS_TELEFON)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
