@@ -2,30 +2,30 @@ package xyz.alto.debtfriend.login.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import butterknife.ButterKnife;
-import se.dromt.papper.PapperView;
+import se.dromt.papper.ViewBuilder;
+import xyz.alto.debtfriend.R;
 
 /**
  * Created by Anton on 2015-10-10.
  */
-public class LoginView extends PapperView {
-    public LoginView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+
+public class LoginView extends LinearLayout {
+
+    public static class Builder extends ViewBuilder {
+        @Override
+        protected View build(Context context, ViewGroup container) {
+            return new LoginView(context);
+        }
     }
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        // Initera saker här
-        ButterKnife.bind(this);
-
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        /* Om PapperView.Builder har skickats med argument (bundle) eller presenter (object),
-        kan de hämtas här med getArguments() och getPresenter() */
+    public LoginView(Context context) {
+        super(context);
+        LayoutInflater.from(context).inflate(R.layout.view_login, this, true);
     }
 }
