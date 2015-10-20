@@ -28,4 +28,7 @@
     <string name="view_login_input_username_or_email">Username or email address</string>
     <string name="view_login_input_password">Password</string>
     <string name="view_login_button_login">Log in</string>
+    <string name="view_login_loading_text">Hang on...</string>
+    <string name="view_login_no_internet">Internet connection is required when logging in the first time.</string>
+    <string name="view_login_fill_all_fields">Fill in all fields.</string>
 </resources>

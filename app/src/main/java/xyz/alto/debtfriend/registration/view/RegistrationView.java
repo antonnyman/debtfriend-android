@@ -1,7 +1,6 @@
 package xyz.alto.debtfriend.registration.view;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -139,7 +138,7 @@ public class RegistrationView extends LinearLayout {
                     } else {
                         Helper.showViews(mUsername, mEmail, mPassword, mCreateAccount);
                         Helper.hideViews(mProgressBar, mLoadingText);
-                        Helper.snackbar(RegistrationView.this, result + ".", "OK", 0);
+                        Helper.snackbar(RegistrationView.this, result + ".", ok, 0);
                     }
                 }
 

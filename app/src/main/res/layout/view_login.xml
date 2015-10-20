@@ -6,6 +6,17 @@
     android:orientation="vertical"
     android:layout_margin="16dp">
 
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_login_progressbar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_login_loading_text"
+        android:layout_gravity="center_horizontal" />
+
     <EditText
         android:id="@+id/view_login_input_username_or_email"
         android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.Headers;
 import retrofit.http.POST;
+import xyz.alto.debtfriend.api.model.LoginResult;
 import xyz.alto.debtfriend.api.model.RegistrationResult;
 import xyz.alto.debtfriend.api.model.User;
 
@@ -18,4 +19,8 @@ public interface AltoService {
     @Headers({"Accept: application/json", "Content-type: application/json"})
     @POST("/api/register")
     Call<RegistrationResult> register(@Body User user);
+
+    @Headers({"Accept: application/json", "Content-type: application/json"})
+    @POST("/api/login")
+    Call<LoginResult> login(@Body User user);
 }
