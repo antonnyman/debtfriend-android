@@ -8,4 +8,6 @@ public class Static {
 
     public static final String LOCALHOST = "http://192.168.0.101:5000";
     public static final String ANTONS_TELEFON = "http://192.168.43.54:5000";
+
+    public static final String SHARED_PREFS = "xyz.alto.debtfriend";
 }

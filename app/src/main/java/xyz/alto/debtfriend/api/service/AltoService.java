@@ -2,8 +2,11 @@ package xyz.alto.debtfriend.api.service;
 
 import retrofit.Call;
 import retrofit.http.Body;
+import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
+import retrofit.http.Path;
+import xyz.alto.debtfriend.api.model.FriendsResult;
 import xyz.alto.debtfriend.api.model.LoginResult;
 import xyz.alto.debtfriend.api.model.RegistrationResult;
 import xyz.alto.debtfriend.api.model.User;
@@ -23,4 +26,10 @@ public interface AltoService {
     @Headers({"Accept: application/json", "Content-type: application/json"})
     @POST("/api/login")
     Call<LoginResult> login(@Body User user);
+
+    @GET("/api/friends/all/{key}")
+    Call<FriendsResult> getFriends(@Path("key") String key);
+
+
+
 }

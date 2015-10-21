@@ -26,7 +26,6 @@ import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
 import xyz.alto.debtfriend.api.model.LoginResult;
 import xyz.alto.debtfriend.api.model.User;
-import xyz.alto.debtfriend.main.MainActivity;
 import xyz.alto.debtfriend.utils.Helper;
 
 /**
@@ -131,6 +130,8 @@ public class LoginView extends LinearLayout {
                         Helper.hideViews(mProgressBar, mLoadingText);
                         Helper.snackbar(LoginView.this, "Login successful", ok, 1);
                         Log.d("The KEY", response.body().getKey());
+                        Helper.storeString(getContext(), "key", response.body().getKey());
+                        Helper.storeBoolean(getContext(), "isLoggedIn", true);
                     }
 
                 }

@@ -2,6 +2,7 @@ package xyz.alto.debtfriend.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
@@ -90,12 +91,9 @@ public class Helper {
         }
     }
 
-
     public static boolean isEmptyString(CharSequence string) {
         return (TextUtils.isEmpty(string) || string.toString().equalsIgnoreCase("null"));
     }
-
-
 
     public static boolean canConnect(@NonNull Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -104,6 +102,38 @@ public class Helper {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    public static void storeString(Context context, String key, String save) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Static.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, save);
+        editor.apply();
+    }
+
+    public static void storeInt(Context context, String key, int save) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Static.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(key, save);
+        editor.apply();
+    }
+
+    public static void storeBoolean(Context context, String key, boolean save) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Static.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(key, save);
+        editor.apply();
+    }
+
+    public static boolean isLoggedIn(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Static.SHARED_PREFS, Context.MODE_PRIVATE);
+        boolean isloggedin = sharedPreferences.getBoolean("isLoggedIn", false);
+        return isloggedin;
+    }
+
+    public static String getKey(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Static.SHARED_PREFS, Context.MODE_PRIVATE);
+        String key = sharedPreferences.getString("key", "");
+        return key;
+    }
 
     public static boolean fileExists(Context context, String filename) {
         File file = context.getFileStreamPath(filename);

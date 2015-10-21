@@ -9,9 +9,12 @@
     <string name="no">No</string>
     <string name="no_thanks">No thanks</string>
 
-    <!-- View start -->
+    <!-- View start default-->
     <string name="view_start_button_register">Register</string>
     <string name="view_start_button_login">Log in</string>
+
+    <!-- View start -->
+    <string name="view_start_button_add_friend">Add friend</string>
 
     <!-- Registration view -->
     <string name="view_registration_input_username">Username</string>
