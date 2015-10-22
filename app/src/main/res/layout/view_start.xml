@@ -6,7 +6,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/view_start_button_register"
+        android:id="@+id/view_start_button_friends"
         android:text="@string/view_start_button_add_friend"
         android:padding="16dp"
         style="@style/Widget.AppCompat.Button.Colored"

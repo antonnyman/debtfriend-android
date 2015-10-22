@@ -1,6 +1,7 @@
 package xyz.alto.debtfriend.start.view;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import se.dromt.papper.ViewManager;
 import se.dromt.papper.PapperActivity;
 import se.dromt.papper.ViewBuilder;
 import xyz.alto.debtfriend.R;
+import xyz.alto.debtfriend.friends.view.FriendsListView;
 import xyz.alto.debtfriend.login.view.LoginView;
 import xyz.alto.debtfriend.main.MainActivity;
 import xyz.alto.debtfriend.registration.view.RegistrationView;
@@ -52,15 +54,22 @@ public class StartView extends LinearLayout {
         return ((PapperActivity) context).getViewManager();
     }
 
-    @OnClick (R.id.view_start_button_register) void clickRegister() {
+    @Nullable
+    @OnClick (R.id.view_start_default_button_register) void clickRegister() {
         Log.d(getClass().getName(), "click!");
         getViewManager(getContext())
                 .addView(new RegistrationView.Builder());
     }
 
-    @OnClick (R.id.view_start_button_login) void clickLogin() {
+    @Nullable
+    @OnClick (R.id.view_start_default_button_login) void clickLogin() {
         Log.d(getClass().getName(), "click!");
         getViewManager(getContext())
                 .addView(new LoginView.Builder());
+    }
+
+    @Nullable
+    @OnClick(R.id.view_start_button_friends) void clickFriends() {
+        getViewManager(getContext()).addView(new FriendsListView.Builder());
     }
 }

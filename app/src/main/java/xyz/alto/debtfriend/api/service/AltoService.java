@@ -1,5 +1,7 @@
 package xyz.alto.debtfriend.api.service;
 
+import java.util.List;
+
 import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -27,6 +29,7 @@ public interface AltoService {
     @POST("/api/login")
     Call<LoginResult> login(@Body User user);
 
+    @Headers({"Accept: application/json", "Content-type: application/json"})
     @GET("/api/friends/all/{key}")
     Call<FriendsResult> getFriends(@Path("key") String key);
 

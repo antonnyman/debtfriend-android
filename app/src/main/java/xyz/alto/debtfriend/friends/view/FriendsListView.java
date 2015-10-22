@@ -1,9 +1,18 @@
 package xyz.alto.debtfriend.friends.view;
 
 import android.content.Context;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SearchViewCompat;
+import android.support.v7.internal.view.menu.MenuBuilder;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -12,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -33,9 +43,12 @@ import xyz.alto.debtfriend.utils.Helper;
 public class FriendsListView extends LinearLayout {
 
     @Bind(R.id.view_friends_list) RecyclerView mFriendsList;
+    FriendsListAdapter mFriendsListAdapter;
 
     public FriendsListView(Context context) {
         super(context);
+        LayoutInflater.from(context).inflate(R.layout.view_friends_list, this, true);
+        ButterKnife.bind(this);
     }
 
     public static class Builder extends ViewBuilder {
@@ -55,24 +68,34 @@ public class FriendsListView extends LinearLayout {
 
         List<Friend> mFriends = getFriends();
 
-        FriendsListAdapter friendsListAdapter = new FriendsListAdapter(mFriends);
-        mFriendsList.setAdapter(friendsListAdapter);
+        mFriendsListAdapter = new FriendsListAdapter(mFriends);
+        mFriendsList.setAdapter(mFriendsListAdapter);
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mFriendsList.setLayoutManager(linearLayoutManager);
+        //mFriendsList.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration()
+        //mFriendsList.setItemAnimator(new DefaultItemAnimator());
 
     }
 
     public List<Friend> getFriends() {
-        List<Friend> friends = new ArrayList<>();
+        final List<Friend> friends = new ArrayList<>();
         RestClient restClient = new RestClient();
 
         Call<FriendsResult> call = restClient.getAltoService().getFriends(Helper.getKey(getContext()));
         call.enqueue(new Callback<FriendsResult>() {
             @Override
             public void onResponse(Response<FriendsResult> response, Retrofit retrofit) {
-                Log.d("FriendsResult", response.body() + response.message() + response.code());
+                Log.d("FriendsResult", response.body().getResult() + response.message() + response.code());
+
+                for(Friend f : response.body().getResult()) {
+                    Log.d("Ma bro", f.getUsername());
+                    friends.add(new Friend(f.getUsername(), f.getEmail(), f.getLastLoggedIn(), f.getRegistredOn(), f.isAdmin(), f.isConfirmed()));
+                }
+
+                mFriendsListAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -80,6 +103,7 @@ public class FriendsListView extends LinearLayout {
                 t.printStackTrace();
             }
         });
+
 
         return friends;
     }

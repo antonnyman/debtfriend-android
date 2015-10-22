@@ -7,23 +7,17 @@ import java.util.Date;
  */
 public class Friend {
 
-    String email, username;
-    Date lastLoggedIn;
-    boolean admin;
+    String username, email;
+    Date lastLoggedIn, registredOn;
+    boolean admin, confirmed;
 
-    public Friend(String email, String username, Date lastLoggedIn, boolean admin) {
-        this.email = email;
+    public Friend(String username, String email, Date lastLoggedIn, Date registredOn, boolean admin, boolean confirmed) {
         this.username = username;
-        this.lastLoggedIn = lastLoggedIn;
-        this.admin = admin;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
+        this.lastLoggedIn = lastLoggedIn;
+        this.registredOn = registredOn;
+        this.admin = admin;
+        this.confirmed = confirmed;
     }
 
     public String getUsername() {
@@ -34,6 +28,14 @@ public class Friend {
         this.username = username;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Date getLastLoggedIn() {
         return lastLoggedIn;
     }
@@ -42,11 +44,27 @@ public class Friend {
         this.lastLoggedIn = lastLoggedIn;
     }
 
+    public Date getRegistredOn() {
+        return registredOn;
+    }
+
+    public void setRegistredOn(Date registredOn) {
+        this.registredOn = registredOn;
+    }
+
     public boolean isAdmin() {
         return admin;
     }
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
     }
 }

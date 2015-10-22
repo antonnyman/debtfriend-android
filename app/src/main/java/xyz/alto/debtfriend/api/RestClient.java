@@ -25,6 +25,7 @@ public class RestClient {
 
     public RestClient() {
         OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.interceptors().add(new LoggingInterceptor());
         okHttpClient.interceptors().add(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
@@ -39,10 +40,10 @@ public class RestClient {
 
                 Response response = chain.proceed(request);
 
-                Buffer buffer = new Buffer();
-                request.body().writeTo(buffer);
-                String body = buffer.readUtf8();
-                Log.d("Send this", body);
+                //Buffer buffer = new Buffer();
+                //request.body().writeTo(buffer);
+                //String body = buffer.readUtf8();
+                //Log.d("Send this", body);
 
                 // Customize or return the response
                 return response;
@@ -59,5 +60,22 @@ public class RestClient {
 
     public AltoService getAltoService() {
         return altoService;
+    }
+
+
+    class LoggingInterceptor implements Interceptor {
+        @Override public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+
+            long t1 = System.nanoTime();
+            Log.i("Interceptor", String.format("Sending request %s on %s%n%s", "URL" + request.url(), " Chain connection " + chain.connection(), " Request headers " + request.headers()));
+
+            Response response = chain.proceed(request);
+
+            long t2 = System.nanoTime();
+            Log.i("Interceptor", String.format("Received response for %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, response.headers()));
+
+            return response;
+        }
     }
 }

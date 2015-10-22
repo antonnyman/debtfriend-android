@@ -10,7 +10,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/view_start_button_register"
+        android:id="@+id/view_start_default_button_register"
         android:text="@string/view_start_button_register"
         android:padding="16dp"
         style="@style/Widget.AppCompat.Button.Colored"
@@ -19,7 +19,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/view_start_button_login"
+        android:id="@+id/view_start_default_button_login"
         android:text="@string/view_start_button_login"
         android:padding="16dp"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
