@@ -64,7 +64,7 @@ public class Helper {
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
-    public static void hideToolbar(Activity a) {
+    public static void hideToolbar(Context a) {
         MainActivity m = (MainActivity) a;
         m.getSupportActionBar().hide();
     }

@@ -4,12 +4,16 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import se.dromt.papper.OnOptionsMenuListener;
 import se.dromt.papper.ViewManager;
 import se.dromt.papper.PapperActivity;
 import se.dromt.papper.ViewBuilder;
@@ -23,15 +27,8 @@ import xyz.alto.debtfriend.utils.Helper;
 /**
  * Created by Anton on 2015-10-10.
  */
-public class StartView extends LinearLayout {
+public class StartView extends LinearLayout implements OnOptionsMenuListener {
 
-
-    public static class Builder extends ViewBuilder {
-        @Override
-        protected View build(Context context, ViewGroup container) {
-            return new StartView(context);
-        }
-    }
 
     public StartView(Context context) {
         super(context);
@@ -49,6 +46,23 @@ public class StartView extends LinearLayout {
         ButterKnife.bind(this);
     }
 
+    public static class Builder extends ViewBuilder {
+        @Override
+        protected View build(Context context, ViewGroup container) {
+            return new StartView(context);
+        }
+    }
+
+
+    @Override
+    public void onOptionsMenuCreated(Menu menu) {
+        new MenuInflater(getContext()).inflate(R.menu.menu_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return false;
+    }
 
     public ViewManager getViewManager(Context context) {
         return ((PapperActivity) context).getViewManager();
