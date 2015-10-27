@@ -29,7 +29,7 @@ import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
 import xyz.alto.debtfriend.api.model.RegistrationResult;
 import xyz.alto.debtfriend.api.model.User;
-import xyz.alto.debtfriend.start.view.StartView;
+import xyz.alto.debtfriend.home.view.HomeView;
 import xyz.alto.debtfriend.utils.Helper;
 
 /**
@@ -134,7 +134,7 @@ public class RegistrationView extends LinearLayout {
                     String result = response.body().getResult();
 
                     if (result.equals("success")) {
-                        getViewManager(getContext()).addView(new StartView.Builder());
+                        getViewManager(getContext()).addView(new HomeView.Builder());
                     } else {
                         Helper.showViews(mUsername, mEmail, mPassword, mCreateAccount);
                         Helper.hideViews(mProgressBar, mLoadingText);

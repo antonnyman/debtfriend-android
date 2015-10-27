@@ -14,7 +14,7 @@ import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import xyz.alto.debtfriend.api.service.AltoService;
 
-import static xyz.alto.debtfriend.utils.Static.ANTONS_TELEFON;
+import static xyz.alto.debtfriend.utils.Static.ISAKS_TELEFON;
 
 /**
  * Created by Anton on 2015-10-10.
@@ -51,7 +51,7 @@ public class RestClient {
         });
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ANTONS_TELEFON)
+                .baseUrl(ISAKS_TELEFON)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
