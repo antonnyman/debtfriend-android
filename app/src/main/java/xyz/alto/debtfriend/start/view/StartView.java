@@ -4,12 +4,16 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import se.dromt.papper.OnOptionsMenuListener;
 import se.dromt.papper.ViewManager;
 import se.dromt.papper.PapperActivity;
 import se.dromt.papper.ViewBuilder;
@@ -23,8 +27,7 @@ import xyz.alto.debtfriend.utils.Helper;
 /**
  * Created by Anton on 2015-10-10.
  */
-public class StartView extends LinearLayout {
-
+public class StartView extends LinearLayout implements OnOptionsMenuListener{
 
     public static class Builder extends ViewBuilder {
         @Override
@@ -37,7 +40,6 @@ public class StartView extends LinearLayout {
         super(context);
         if(Helper.isLoggedIn(getContext())) {
             LayoutInflater.from(context).inflate(R.layout.view_start, this, true);
-
         } else {
             LayoutInflater.from(context).inflate(R.layout.view_start_default, this, true);
 //            if(((MainActivity) context).getSupportActionBar().isShowing()) {
@@ -71,5 +73,15 @@ public class StartView extends LinearLayout {
     @Nullable
     @OnClick(R.id.view_start_button_friends) void clickFriends() {
         getViewManager(getContext()).addView(new FriendsListView.Builder());
+    }
+
+    @Override
+    public void onOptionsMenuCreated(Menu menu) {
+        new MenuInflater(getContext()).inflate(R.menu.menu_search_friends, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return false;
     }
 }
