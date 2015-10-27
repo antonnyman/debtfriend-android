@@ -8,6 +8,7 @@ import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import xyz.alto.debtfriend.api.model.DebtsResult;
 import xyz.alto.debtfriend.api.model.FriendsResult;
 import xyz.alto.debtfriend.api.model.LoginResult;
 import xyz.alto.debtfriend.api.model.RegistrationResult;
@@ -32,6 +33,10 @@ public interface AltoService {
     @Headers({"Accept: application/json", "Content-type: application/json"})
     @GET("/api/friends/all/{key}")
     Call<FriendsResult> getFriends(@Path("key") String key);
+
+    @Headers({"Accept: application/json", "Content-type: application/json"})
+    @GET("/api/friends/all/{key}")
+    Call<DebtsResult> getDebts(@Path("key") String key);
 
 
 

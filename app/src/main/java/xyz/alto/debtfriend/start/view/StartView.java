@@ -27,14 +27,7 @@ import xyz.alto.debtfriend.utils.Helper;
 /**
  * Created by Anton on 2015-10-10.
  */
-public class StartView extends LinearLayout implements OnOptionsMenuListener{
-
-    public static class Builder extends ViewBuilder {
-        @Override
-        protected View build(Context context, ViewGroup container) {
-            return new StartView(context);
-        }
-    }
+public class StartView extends LinearLayout implements OnOptionsMenuListener {
 
     public StartView(Context context) {
         super(context);
@@ -51,6 +44,12 @@ public class StartView extends LinearLayout implements OnOptionsMenuListener{
         ButterKnife.bind(this);
     }
 
+    public static class Builder extends ViewBuilder {
+        @Override
+        protected View build(Context context, ViewGroup container) {
+            return new StartView(context);
+        }
+    }
 
     public ViewManager getViewManager(Context context) {
         return ((PapperActivity) context).getViewManager();

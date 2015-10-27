@@ -7,17 +7,27 @@ import java.util.Date;
  */
 public class Friend {
 
+    int id;
     String username, email;
     Date lastLoggedIn, registredOn;
     boolean admin, confirmed;
 
-    public Friend(String username, String email, Date lastLoggedIn, Date registredOn, boolean admin, boolean confirmed) {
+    public Friend(int id, String username, String email, Date lastLoggedIn, Date registredOn, boolean admin, boolean confirmed) {
+        this.id = id;
         this.username = username;
         this.email = email;
         this.lastLoggedIn = lastLoggedIn;
         this.registredOn = registredOn;
         this.admin = admin;
         this.confirmed = confirmed;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
