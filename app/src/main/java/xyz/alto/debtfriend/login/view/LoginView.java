@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,6 +24,7 @@ import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
+import se.dromt.papper.OnOptionsMenuListener;
 import se.dromt.papper.ViewBuilder;
 import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
@@ -32,8 +36,7 @@ import xyz.alto.debtfriend.utils.Helper;
  * Created by Anton on 2015-10-10.
  */
 
-public class LoginView extends LinearLayout {
-
+public class LoginView extends LinearLayout implements OnOptionsMenuListener {
 
     @Bind(R.id.view_login_input_username_or_email) EditText mEmail;
     @Bind(R.id.view_login_input_password) EditText mPassword;
@@ -63,7 +66,6 @@ public class LoginView extends LinearLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-
         Helper.hideViews(mProgressBar, mLoadingText);
     }
 
@@ -144,5 +146,15 @@ public class LoginView extends LinearLayout {
 
         }
 
+    }
+
+    @Override
+    public void onOptionsMenuCreated(Menu menu) {
+        new MenuInflater(getContext()).inflate(R.menu.menu_login, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return false;
     }
 }

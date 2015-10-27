@@ -59,7 +59,7 @@ public class StartView extends LinearLayout implements OnOptionsMenuListener {
 
     @Override
     public void onOptionsMenuCreated(Menu menu) {
-        //new MenuInflater(getContext()).inflate(R.menu.menu_search_friends, menu);
+        new MenuInflater(getContext()).inflate(R.menu.menu_start, menu);
     }
 
     @Override
