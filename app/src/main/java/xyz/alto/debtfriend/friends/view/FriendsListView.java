@@ -56,6 +56,7 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
 
     @Override
     public void onOptionsMenuCreated(Menu menu) {
+        // Inflatas inte :C
         new MenuInflater(getContext()).inflate(R.menu.menu_search_friends, menu);
     }
 
