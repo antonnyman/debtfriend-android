@@ -34,6 +34,8 @@ import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
 import xyz.alto.debtfriend.api.model.FriendsResult;
 import xyz.alto.debtfriend.api.model.LoginResult;
+import xyz.alto.debtfriend.api.model.User;
+import xyz.alto.debtfriend.api.model.UserResult;
 import xyz.alto.debtfriend.friends.adapter.FriendsListAdapter;
 import xyz.alto.debtfriend.friends.model.Friend;
 import xyz.alto.debtfriend.main.MainActivity;
@@ -56,8 +58,21 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
 
     @Override
     public void onOptionsMenuCreated(Menu menu) {
-        // Inflatas inte :C
         new MenuInflater(getContext()).inflate(R.menu.menu_search_friends, menu);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.menu_search_friends_search_item));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchUser(newText);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -92,6 +107,32 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
         //mFriendsList.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration()
         //mFriendsList.setItemAnimator(new DefaultItemAnimator());
 
+    }
+
+    public List<User> searchUser(String s) {
+        final List<User> users = new ArrayList<>();
+        RestClient restClient = new RestClient();
+
+        Call<UserResult> call = restClient.getAltoService().searchUser(s);
+        call.enqueue(new Callback<UserResult>() {
+            @Override
+            public void onResponse(Response<UserResult> response, Retrofit retrofit) {
+
+                if(response.body() != null) {
+                    for(User u : response.body().getResult()) {
+                        Log.d("Hey bro", u.getUsername());
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return users;
     }
 
     public List<Friend> getFriends() {

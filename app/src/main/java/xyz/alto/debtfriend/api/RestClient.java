@@ -15,6 +15,7 @@ import retrofit.Retrofit;
 import xyz.alto.debtfriend.api.service.AltoService;
 
 import static xyz.alto.debtfriend.utils.Static.ANTONS_TELEFON;
+import static xyz.alto.debtfriend.utils.Static.LOCALHOST;
 
 /**
  * Created by Anton on 2015-10-10.

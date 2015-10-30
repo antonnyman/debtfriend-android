@@ -8,7 +8,8 @@
         android:id="@+id/menu_search_friends_search_item"
         android:title="Find friends"
         android:icon="@drawable/ic_search_white_24dp"
-        app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="always"/>
+        android:actionViewClass="android.support.v7.widget.SearchView"
+
+        android:showAsAction="always"/>
 
 </menu>
