@@ -1,6 +1,8 @@
 package xyz.alto.debtfriend.friends.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,6 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 import butterknife.Bind;
+import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit.Call;
@@ -39,6 +43,7 @@ import xyz.alto.debtfriend.api.model.FriendsResult;
 import xyz.alto.debtfriend.friends.adapter.FriendsListAdapter;
 import xyz.alto.debtfriend.friends.model.Friend;
 import xyz.alto.debtfriend.utils.Helper;
+import xyz.alto.debtfriend.utils.ItemClickSupport;
 
 /**
  * Created by antonnyman on 21/10/15.
@@ -47,6 +52,8 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
 
     @Bind(R.id.view_friends_list) RecyclerView mFriendsList;
     @Bind(R.id.view_friends_list_fab) FloatingActionButton mFab;
+    @BindString(R.string.yes) String yes;
+    @BindString(R.string.no) String no;
     FriendsListAdapter mFriendsListAdapter;
 
     public FriendsListView(Context context) {
@@ -89,7 +96,40 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mFriendsList.setLayoutManager(linearLayoutManager);
 
+        ItemClickSupport.addTo(mFriendsList).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                Helper.toast(getContext(), position + "");
+            }
+        });
+
+        ItemClickSupport.addTo(mFriendsList).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClicked(RecyclerView recyclerView, final int position, View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Remove friend")
+                        .setMessage("Remove friend from your friends list?")
+                        .setPositiveButton(yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //deleteFriend(position);
+                                Helper.toast(getContext(), "Not implemented in API");
+                            }
+                        })
+                        .setNegativeButton(no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create();
+                builder.show();
+                return true;
+            }
+        });
+
     }
+
 
     @OnClick(R.id.view_friends_list_fab) void clickFab() {
         getViewManager(getContext()).addView(new AddFriendView.Builder());
@@ -105,9 +145,14 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
             @Override
             public void onResponse(Response<FriendsResult> response, Retrofit retrofit) {
 
-                for (Friend f : response.body().getResult()) {
-                    Log.d("Ma bro", f.getUsername());
-                    friendList.add(new Friend(f.getId(), f.getUsername(), f.getEmail(), f.getLastLoggedIn(), f.getRegisteredOn(), f.getConfirmedOn(), f.isAdmin(), f.isConfirmed()));
+                if(response.body() == null) {
+                    Helper.toast(getContext(), "API not running.");
+                } else {
+                    for (Friend f : response.body().getResult()) {
+
+                        Log.d("Ma bro", f.getUsername());
+                        friendList.add(new Friend(f.getId(), f.getUsername(), f.getEmail(), f.getLastLoggedIn(), f.getRegisteredOn(), f.getConfirmedOn(), f.isAdmin(), f.isConfirmed()));
+                    }
                 }
 
                 mFriendsListAdapter.notifyDataSetChanged();

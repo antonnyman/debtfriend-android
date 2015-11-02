@@ -18,18 +18,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.BindString;
 import butterknife.ButterKnife;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 import se.dromt.papper.OnOptionsMenuListener;
+import se.dromt.papper.PapperActivity;
 import se.dromt.papper.ViewBuilder;
+import se.dromt.papper.ViewManager;
 import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
+import xyz.alto.debtfriend.api.model.AddFriendResult;
 import xyz.alto.debtfriend.api.model.FriendsResult;
 import xyz.alto.debtfriend.friends.adapter.AddFriendAdapter;
 import xyz.alto.debtfriend.friends.model.Friend;
+import xyz.alto.debtfriend.utils.Helper;
+import xyz.alto.debtfriend.utils.ItemClickSupport;
 
 /**
  * Created by antonnyman on 02/11/15.
@@ -37,13 +43,19 @@ import xyz.alto.debtfriend.friends.model.Friend;
 public class AddFriendView extends LinearLayout implements OnOptionsMenuListener {
 
     @Bind(R.id.view_add_friends_list) RecyclerView mFriendsList;
+    @BindString(R.string.ok) String ok;
     AddFriendAdapter mAddFriendAdapter;
     List<Friend> mSearchFriends;
+    RestClient mRestClient = new RestClient();
 
     public AddFriendView(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.view_add_friend_list, this, true);
         ButterKnife.bind(this);
+    }
+
+    public ViewManager getViewManager(Context context) {
+        return ((PapperActivity) context).getViewManager();
     }
 
 
@@ -52,11 +64,14 @@ public class AddFriendView extends LinearLayout implements OnOptionsMenuListener
         new MenuInflater(getContext()).inflate(R.menu.menu_search_friends, menu);
         MenuItem menuItem = menu.findItem(R.id.menu_search_friends_search_item);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.requestFocus();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchFriend(query);
+                searchView.clearFocus();
+                Helper.hideKeyboard(AddFriendView.this, getContext());
                 return true;
             }
 
@@ -92,17 +107,25 @@ public class AddFriendView extends LinearLayout implements OnOptionsMenuListener
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mFriendsList.setLayoutManager(linearLayoutManager);
 
+
+        ItemClickSupport.addTo(mFriendsList).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                addFriendToFriendslist(mSearchFriends.get(position));
+                Helper.hideKeyboard(AddFriendView.this, getContext());
+            }
+        });
     }
 
     public void searchFriend(String s) {
         mSearchFriends.clear();
-        RestClient restClient = new RestClient();
-        Call<FriendsResult> call = restClient.getAltoService().findUser(s);
+
+        Call<FriendsResult> call = mRestClient.getAltoService().findUser(s);
         call.enqueue(new Callback<FriendsResult>() {
             @Override
             public void onResponse(Response<FriendsResult> response, Retrofit retrofit) {
-                if(response.body() != null) {
-                    for(Friend f : response.body().getResult()) {
+                if (response.body() != null) {
+                    for (Friend f : response.body().getResult()) {
                         mSearchFriends.add(new Friend(
                                 f.getId(),
                                 f.getUsername(),
@@ -123,6 +146,23 @@ public class AddFriendView extends LinearLayout implements OnOptionsMenuListener
                 t.printStackTrace();
             }
         });
+    }
 
+    public void addFriendToFriendslist(final Friend f) {
+
+        Call<AddFriendResult> call = mRestClient.getAltoService().addFriend(f.getId(), Helper.getKey(getContext()));
+        call.enqueue(new Callback<AddFriendResult>() {
+            @Override
+            public void onResponse(Response<AddFriendResult> response, Retrofit retrofit) {
+                Log.d("Response", response.body() + " " + response.code() + " " + response.isSuccess());
+                Helper.snackbar(AddFriendView.this, "Added " + f.getUsername() + " to your friends list", ok, 1);
+                getViewManager(getContext()).addView(new FriendsListView.Builder());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }
