@@ -1,10 +1,8 @@
 package xyz.alto.debtfriend.friends.view;
 
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.SearchViewCompat;
-import android.support.v7.internal.view.menu.MenuBuilder;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -18,10 +16,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -33,10 +36,8 @@ import se.dromt.papper.ViewManager;
 import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
 import xyz.alto.debtfriend.api.model.FriendsResult;
-import xyz.alto.debtfriend.api.model.LoginResult;
 import xyz.alto.debtfriend.friends.adapter.FriendsListAdapter;
 import xyz.alto.debtfriend.friends.model.Friend;
-import xyz.alto.debtfriend.main.MainActivity;
 import xyz.alto.debtfriend.utils.Helper;
 
 /**
@@ -45,18 +46,19 @@ import xyz.alto.debtfriend.utils.Helper;
 public class FriendsListView extends LinearLayout implements OnOptionsMenuListener {
 
     @Bind(R.id.view_friends_list) RecyclerView mFriendsList;
+    @Bind(R.id.view_friends_list_fab) FloatingActionButton mFab;
     FriendsListAdapter mFriendsListAdapter;
 
     public FriendsListView(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.view_friends_list, this, true);
         ButterKnife.bind(this);
-        //Helper.hideToolbar(context);
     }
 
     @Override
     public void onOptionsMenuCreated(Menu menu) {
-        new MenuInflater(getContext()).inflate(R.menu.menu_search_friends, menu);
+
+
     }
 
     @Override
@@ -79,33 +81,33 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        List<Friend> mFriends = getFriends();
-
-        mFriendsListAdapter = new FriendsListAdapter(mFriends);
+        mFriendsListAdapter = new FriendsListAdapter(getMyFriends());
         mFriendsList.setAdapter(mFriendsListAdapter);
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mFriendsList.setLayoutManager(linearLayoutManager);
-        //mFriendsList.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration()
-        //mFriendsList.setItemAnimator(new DefaultItemAnimator());
 
     }
 
-    public List<Friend> getFriends() {
-        final List<Friend> friends = new ArrayList<>();
+    @OnClick(R.id.view_friends_list_fab) void clickFab() {
+        getViewManager(getContext()).addView(new AddFriendView.Builder());
+    }
+
+
+    List<Friend> getMyFriends() {
+        final List<Friend> friendList = new ArrayList<>();
         RestClient restClient = new RestClient();
 
         Call<FriendsResult> call = restClient.getAltoService().getFriends(Helper.getKey(getContext()));
         call.enqueue(new Callback<FriendsResult>() {
             @Override
             public void onResponse(Response<FriendsResult> response, Retrofit retrofit) {
-                Log.d("FriendsResult", response.body().getResult() + response.message() + response.code());
 
-                for(Friend f : response.body().getResult()) {
+                for (Friend f : response.body().getResult()) {
                     Log.d("Ma bro", f.getUsername());
-                    friends.add(new Friend(f.getId(), f.getUsername(), f.getEmail(), f.getLastLoggedIn(), f.getRegistredOn(), f.isAdmin(), f.isConfirmed()));
+                    friendList.add(new Friend(f.getId(), f.getUsername(), f.getEmail(), f.getLastLoggedIn(), f.getRegisteredOn(), f.getConfirmedOn(), f.isAdmin(), f.isConfirmed()));
                 }
 
                 mFriendsListAdapter.notifyDataSetChanged();
@@ -116,7 +118,6 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
                 t.printStackTrace();
             }
         });
-
-        return friends;
+        return friendList;
     }
 }

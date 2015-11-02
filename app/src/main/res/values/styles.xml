@@ -17,12 +17,9 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="mySearchViewStyle">
-        <!-- Close button icon -->
+    <style name="mySearchViewStyle" parent="Widget.AppCompat.SearchView">
         <item name="closeIcon">@drawable/ic_close_white_24dp</item>
-        <!-- Search button icon -->
         <item name="searchIcon">@drawable/ic_search_white_24dp</item>
-        <!-- Go/commit button icon -->
         <item name="goIcon">@drawable/ic_search_white_24dp</item>
     </style>
 

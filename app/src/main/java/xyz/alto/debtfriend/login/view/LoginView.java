@@ -25,11 +25,14 @@ import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 import se.dromt.papper.OnOptionsMenuListener;
+import se.dromt.papper.PapperActivity;
 import se.dromt.papper.ViewBuilder;
+import se.dromt.papper.ViewManager;
 import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
 import xyz.alto.debtfriend.api.model.LoginResult;
 import xyz.alto.debtfriend.api.model.User;
+import xyz.alto.debtfriend.home.view.HomeView;
 import xyz.alto.debtfriend.utils.Helper;
 
 /**
@@ -60,6 +63,10 @@ public class LoginView extends LinearLayout implements OnOptionsMenuListener {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.view_login, this, true);
         ButterKnife.bind(this);
+    }
+
+    private ViewManager getViewManager(Context context) {
+        return ((PapperActivity) context).getViewManager();
     }
 
 
@@ -134,6 +141,8 @@ public class LoginView extends LinearLayout implements OnOptionsMenuListener {
                         Log.d("The KEY", response.body().getKey());
                         Helper.storeString(getContext(), "key", response.body().getKey());
                         Helper.storeBoolean(getContext(), "isLoggedIn", true);
+
+                        getViewManager(getContext()).addView(new HomeView.Builder());
                     }
 
                 }

@@ -11,8 +11,10 @@ import retrofit.http.Path;
 import xyz.alto.debtfriend.api.model.DebtsResult;
 import xyz.alto.debtfriend.api.model.FriendsResult;
 import xyz.alto.debtfriend.api.model.LoginResult;
+import xyz.alto.debtfriend.api.model.LogoutResult;
 import xyz.alto.debtfriend.api.model.RegistrationResult;
 import xyz.alto.debtfriend.api.model.User;
+import xyz.alto.debtfriend.api.model.UserResult;
 
 /**
  * Created by Anton on 2015-10-10.
@@ -37,6 +39,14 @@ public interface AltoService {
     @Headers({"Accept: application/json", "Content-type: application/json"})
     @GET("/api/friends/all/{key}")
     Call<DebtsResult> getDebts(@Path("key") String key);
+
+    @Headers({"Accept: application/json", "Content-type: application/json"})
+    @GET("/api/users/find/{username}")
+    Call<FriendsResult> findUser(@Path("username") String username);
+
+    @Headers({"Accept: application/json", "Content-type: application/json"})
+    @GET("/api/logout/{key}")
+    Call<LogoutResult> logout(@Path("key") String key);
 
 
 

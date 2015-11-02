@@ -30,6 +30,8 @@ import xyz.alto.debtfriend.api.RestClient;
 import xyz.alto.debtfriend.api.model.RegistrationResult;
 import xyz.alto.debtfriend.api.model.User;
 import xyz.alto.debtfriend.home.view.HomeView;
+import xyz.alto.debtfriend.login.view.LoginView;
+import xyz.alto.debtfriend.start.view.StartView;
 import xyz.alto.debtfriend.utils.Helper;
 
 /**
@@ -96,9 +98,9 @@ public class RegistrationView extends LinearLayout {
         mLoadingText.setText(R.string.view_registration_loading);
 
 
-        String email = mEmail.getText().toString().trim();
-        String username = mUsername.getText().toString().trim();
-        String password = mPassword.getText().toString();
+        final String email = mEmail.getText().toString().trim();
+        final String username = mUsername.getText().toString().trim();
+        final String password = mPassword.getText().toString();
 
 
         if (Helper.isEmptyString(email) || Helper.isEmptyString(username) || Helper.isEmptyString(password)) {
@@ -134,7 +136,8 @@ public class RegistrationView extends LinearLayout {
                     String result = response.body().getResult();
 
                     if (result.equals("success")) {
-                        getViewManager(getContext()).addView(new HomeView.Builder());
+                        getViewManager(getContext()).addView(new LoginView.Builder());
+                        Helper.snackbar(RegistrationView.this, "Confirm your account at " + email +" before logging in.", ok, 0);
                     } else {
                         Helper.showViews(mUsername, mEmail, mPassword, mCreateAccount);
                         Helper.hideViews(mProgressBar, mLoadingText);
