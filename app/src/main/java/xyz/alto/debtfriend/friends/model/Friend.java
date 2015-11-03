@@ -1,10 +1,14 @@
 package xyz.alto.debtfriend.friends.model;
 
+import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
+
 import java.util.Date;
 
 /**
  * Created by antonnyman on 21/10/15.
  */
+@Parcel
 public class Friend {
 
     int id;
@@ -12,6 +16,7 @@ public class Friend {
     Date lastLoggedIn, registeredOn, confirmedOn;
     boolean admin, confirmed;
 
+    @ParcelConstructor
     public Friend(int id, String username, String email, Date lastLoggedIn, Date registeredOn, Date confirmedOn, boolean admin, boolean confirmed) {
         this.id = id;
         this.username = username;

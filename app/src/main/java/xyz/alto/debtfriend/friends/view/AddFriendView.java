@@ -30,7 +30,7 @@ import se.dromt.papper.ViewBuilder;
 import se.dromt.papper.ViewManager;
 import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
-import xyz.alto.debtfriend.api.model.AddFriendResult;
+import xyz.alto.debtfriend.api.model.AddRemoveFriendResult;
 import xyz.alto.debtfriend.api.model.FriendsResult;
 import xyz.alto.debtfriend.friends.adapter.AddFriendAdapter;
 import xyz.alto.debtfriend.friends.model.Friend;
@@ -150,10 +150,10 @@ public class AddFriendView extends LinearLayout implements OnOptionsMenuListener
 
     public void addFriendToFriendslist(final Friend f) {
 
-        Call<AddFriendResult> call = mRestClient.getAltoService().addFriend(f.getId(), Helper.getKey(getContext()));
-        call.enqueue(new Callback<AddFriendResult>() {
+        Call<AddRemoveFriendResult> call = mRestClient.getAltoService().addFriend(f.getId(), Helper.getKey(getContext()));
+        call.enqueue(new Callback<AddRemoveFriendResult>() {
             @Override
-            public void onResponse(Response<AddFriendResult> response, Retrofit retrofit) {
+            public void onResponse(Response<AddRemoveFriendResult> response, Retrofit retrofit) {
                 Log.d("Response", response.body() + " " + response.code() + " " + response.isSuccess());
                 Helper.snackbar(AddFriendView.this, "Added " + f.getUsername() + " to your friends list", ok, 1);
                 getViewManager(getContext()).addView(new FriendsListView.Builder());

@@ -3,6 +3,8 @@ package xyz.alto.debtfriend.friends.view;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,7 @@ import se.dromt.papper.ViewBuilder;
 import se.dromt.papper.ViewManager;
 import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
+import xyz.alto.debtfriend.api.model.AddRemoveFriendResult;
 import xyz.alto.debtfriend.api.model.FriendsResult;
 import xyz.alto.debtfriend.friends.adapter.FriendsListAdapter;
 import xyz.alto.debtfriend.friends.model.Friend;
@@ -47,6 +52,8 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
     @BindString(R.string.yes) String yes;
     @BindString(R.string.no) String no;
     FriendsListAdapter mFriendsListAdapter;
+    List<Friend> myFriends;
+    RestClient mRestClient = new RestClient();
 
     public FriendsListView(Context context) {
         super(context);
@@ -78,7 +85,8 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        mFriendsListAdapter = new FriendsListAdapter(getMyFriends());
+        myFriends = getMyFriends();
+        mFriendsListAdapter = new FriendsListAdapter(myFriends);
         mFriendsList.setAdapter(mFriendsListAdapter);
 
 
@@ -89,7 +97,9 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
         ItemClickSupport.addTo(mFriendsList).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Helper.toast(getContext(), position + "");
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("friend", Parcels.wrap(myFriends.get(position)));
+                getViewManager(getContext()).addView(new FriendDetailView.Builder().arguments(bundle));
             }
         });
 
@@ -102,8 +112,7 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
                         .setPositiveButton(yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //deleteFriend(position);
-                                Helper.toast(getContext(), "Not implemented in API");
+                                removeFriend(myFriends.get(position));
                             }
                         })
                         .setNegativeButton(no, new DialogInterface.OnClickListener() {
@@ -129,14 +138,14 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
 
     List<Friend> getMyFriends() {
         final List<Friend> friendList = new ArrayList<>();
-        RestClient restClient = new RestClient();
 
-        Call<FriendsResult> call = restClient.getAltoService().getFriends(Helper.getKey(getContext()));
+
+        Call<FriendsResult> call = mRestClient.getAltoService().getFriends(Helper.getKey(getContext()));
         call.enqueue(new Callback<FriendsResult>() {
             @Override
             public void onResponse(Response<FriendsResult> response, Retrofit retrofit) {
 
-                if(response.body() == null) {
+                if (response.body() == null) {
                     Helper.toast(getContext(), "API not running.");
                 } else {
                     for (Friend f : response.body().getResult()) {
@@ -155,5 +164,22 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
             }
         });
         return friendList;
+    }
+
+    void removeFriend(Friend f) {
+        Call<AddRemoveFriendResult> call = mRestClient.getAltoService().removeFriend(f.getId(), Helper.getKey(getContext()));
+        call.enqueue(new Callback<AddRemoveFriendResult>() {
+            @Override
+            public void onResponse(Response<AddRemoveFriendResult> response, Retrofit retrofit) {
+                Helper.snackbar(FriendsListView.this, response.body().getResult(), "OK", 1);
+                getMyFriends();
+                mFriendsListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }
