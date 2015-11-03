@@ -9,7 +9,6 @@
         android:title="Find friends"
         android:icon="@drawable/ic_search_white_24dp"
         android:actionViewClass="android.support.v7.widget.SearchView"
-
         android:showAsAction="always"/>
 
 </menu>

@@ -135,6 +135,12 @@ public class Helper {
         return key;
     }
 
+    public static void clearKey(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Static.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+    }
+
     public static boolean fileExists(Context context, String filename) {
         File file = context.getFileStreamPath(filename);
         if(file == null || !file.exists()) {

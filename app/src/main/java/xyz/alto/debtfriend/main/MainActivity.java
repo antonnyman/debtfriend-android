@@ -1,18 +1,18 @@
 package xyz.alto.debtfriend.main;
 
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
 import se.dromt.papper.ViewManager;
 import se.dromt.papper.PapperActivity;
 import xyz.alto.debtfriend.R;
+import xyz.alto.debtfriend.home.view.HomeView;
 import xyz.alto.debtfriend.start.view.StartView;
+import xyz.alto.debtfriend.utils.Helper;
 
 public class MainActivity extends AppCompatActivity implements PapperActivity {
 
@@ -28,7 +28,11 @@ public class MainActivity extends AppCompatActivity implements PapperActivity {
         mViewManager = ViewManager.create((ViewGroup) findViewById(R.id.main_container), this);
 
         if(getLastCustomNonConfigurationInstance() == null) {
-            mViewManager.addView(new StartView.Builder());
+            if(Helper.isLoggedIn(this)) {
+                mViewManager.addView(new HomeView.Builder());
+            } else {
+                mViewManager.addView(new StartView.Builder());
+            }
         } else {
             mViewManager.rebuildViewStack(getLastCustomNonConfigurationInstance());
         }

@@ -9,15 +9,16 @@ public class Friend {
 
     int id;
     String username, email;
-    Date lastLoggedIn, registredOn;
+    Date lastLoggedIn, registeredOn, confirmedOn;
     boolean admin, confirmed;
 
-    public Friend(int id, String username, String email, Date lastLoggedIn, Date registredOn, boolean admin, boolean confirmed) {
+    public Friend(int id, String username, String email, Date lastLoggedIn, Date registeredOn, Date confirmedOn, boolean admin, boolean confirmed) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.lastLoggedIn = lastLoggedIn;
-        this.registredOn = registredOn;
+        this.registeredOn = registeredOn;
+        this.confirmedOn = confirmedOn;
         this.admin = admin;
         this.confirmed = confirmed;
     }
@@ -54,12 +55,20 @@ public class Friend {
         this.lastLoggedIn = lastLoggedIn;
     }
 
-    public Date getRegistredOn() {
-        return registredOn;
+    public Date getRegisteredOn() {
+        return registeredOn;
     }
 
-    public void setRegistredOn(Date registredOn) {
-        this.registredOn = registredOn;
+    public void setRegisteredOn(Date registeredOn) {
+        this.registeredOn = registeredOn;
+    }
+
+    public Date getConfirmedOn() {
+        return confirmedOn;
+    }
+
+    public void setConfirmedOn(Date confirmedOn) {
+        this.confirmedOn = confirmedOn;
     }
 
     public boolean isAdmin() {

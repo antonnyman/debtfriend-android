@@ -1,17 +1,14 @@
 package xyz.alto.debtfriend.friends.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.SearchViewCompat;
-import android.support.v7.internal.view.menu.MenuBuilder;
-import android.support.v7.widget.DefaultItemAnimator;
+import android.content.DialogInterface;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.BindString;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -33,13 +32,10 @@ import se.dromt.papper.ViewManager;
 import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
 import xyz.alto.debtfriend.api.model.FriendsResult;
-import xyz.alto.debtfriend.api.model.LoginResult;
-import xyz.alto.debtfriend.api.model.User;
-import xyz.alto.debtfriend.api.model.UserResult;
 import xyz.alto.debtfriend.friends.adapter.FriendsListAdapter;
 import xyz.alto.debtfriend.friends.model.Friend;
-import xyz.alto.debtfriend.main.MainActivity;
 import xyz.alto.debtfriend.utils.Helper;
+import xyz.alto.debtfriend.utils.ItemClickSupport;
 
 /**
  * Created by antonnyman on 21/10/15.
@@ -47,32 +43,19 @@ import xyz.alto.debtfriend.utils.Helper;
 public class FriendsListView extends LinearLayout implements OnOptionsMenuListener {
 
     @Bind(R.id.view_friends_list) RecyclerView mFriendsList;
+    @Bind(R.id.view_friends_list_fab) FloatingActionButton mFab;
+    @BindString(R.string.yes) String yes;
+    @BindString(R.string.no) String no;
     FriendsListAdapter mFriendsListAdapter;
 
     public FriendsListView(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.view_friends_list, this, true);
         ButterKnife.bind(this);
-        //Helper.hideToolbar(context);
     }
 
     @Override
     public void onOptionsMenuCreated(Menu menu) {
-        new MenuInflater(getContext()).inflate(R.menu.menu_search_friends, menu);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.menu_search_friends_search_item));
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                searchUser(newText);
-                return true;
-            }
-        });
     }
 
     @Override
@@ -95,59 +78,72 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        List<Friend> mFriends = getFriends();
-
-        mFriendsListAdapter = new FriendsListAdapter(mFriends);
+        mFriendsListAdapter = new FriendsListAdapter(getMyFriends());
         mFriendsList.setAdapter(mFriendsListAdapter);
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mFriendsList.setLayoutManager(linearLayoutManager);
-        //mFriendsList.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration()
-        //mFriendsList.setItemAnimator(new DefaultItemAnimator());
 
-    }
-
-    public List<User> searchUser(String s) {
-        final List<User> users = new ArrayList<>();
-        RestClient restClient = new RestClient();
-
-        Call<UserResult> call = restClient.getAltoService().searchUser(s);
-        call.enqueue(new Callback<UserResult>() {
+        ItemClickSupport.addTo(mFriendsList).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
-            public void onResponse(Response<UserResult> response, Retrofit retrofit) {
-
-                if(response.body() != null) {
-                    for(User u : response.body().getResult()) {
-                        Log.d("Hey bro", u.getUsername());
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                t.printStackTrace();
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                Helper.toast(getContext(), position + "");
             }
         });
 
-        return users;
+        ItemClickSupport.addTo(mFriendsList).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClicked(RecyclerView recyclerView, final int position, View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Remove friend")
+                        .setMessage("Remove friend from your friends list?")
+                        .setPositiveButton(yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //deleteFriend(position);
+                                Helper.toast(getContext(), "Not implemented in API");
+                            }
+                        })
+                        .setNegativeButton(no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create();
+                builder.show();
+                return true;
+            }
+        });
+
     }
 
-    public List<Friend> getFriends() {
-        final List<Friend> friends = new ArrayList<>();
+
+    @OnClick(R.id.view_friends_list_fab) void clickFab() {
+        getViewManager(getContext()).addView(new AddFriendView.Builder());
+    }
+
+
+
+    List<Friend> getMyFriends() {
+        final List<Friend> friendList = new ArrayList<>();
         RestClient restClient = new RestClient();
 
         Call<FriendsResult> call = restClient.getAltoService().getFriends(Helper.getKey(getContext()));
         call.enqueue(new Callback<FriendsResult>() {
             @Override
             public void onResponse(Response<FriendsResult> response, Retrofit retrofit) {
-                Log.d("FriendsResult", response.body().getResult() + response.message() + response.code());
 
-                for(Friend f : response.body().getResult()) {
-                    Log.d("Ma bro", f.getUsername());
-                    friends.add(new Friend(f.getId(), f.getUsername(), f.getEmail(), f.getLastLoggedIn(), f.getRegistredOn(), f.isAdmin(), f.isConfirmed()));
+                if(response.body() == null) {
+                    Helper.toast(getContext(), "API not running.");
+                } else {
+                    for (Friend f : response.body().getResult()) {
+
+                        Log.d("Ma bro", f.getUsername());
+                        friendList.add(new Friend(f.getId(), f.getUsername(), f.getEmail(), f.getLastLoggedIn(), f.getRegisteredOn(), f.getConfirmedOn(), f.isAdmin(), f.isConfirmed()));
+                    }
                 }
 
                 mFriendsListAdapter.notifyDataSetChanged();
@@ -158,7 +154,6 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
                 t.printStackTrace();
             }
         });
-
-        return friends;
+        return friendList;
     }
 }

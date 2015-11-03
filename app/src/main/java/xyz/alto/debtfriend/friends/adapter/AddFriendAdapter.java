@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -15,19 +14,18 @@ import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.friends.model.Friend;
 
 /**
- * Created by antonnyman on 21/10/15.
+ * Created by antonnyman on 02/11/15.
  */
-public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.ViewHolder> {
-
+public class AddFriendAdapter extends RecyclerView.Adapter<AddFriendAdapter.ViewHolder> {
 
     private List<Friend> mFriends;
 
-    public FriendsListAdapter(List<Friend> mFriends) {
+    public AddFriendAdapter(List<Friend> mFriends) {
         this.mFriends = mFriends;
     }
 
     @Override
-    public FriendsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AddFriendAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_friends_list_item, parent, false);
         return new ViewHolder(view);
     }

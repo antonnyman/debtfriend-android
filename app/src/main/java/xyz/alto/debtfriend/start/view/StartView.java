@@ -14,37 +14,17 @@ import android.widget.LinearLayout;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import se.dromt.papper.OnOptionsMenuListener;
-import se.dromt.papper.ViewManager;
 import se.dromt.papper.PapperActivity;
 import se.dromt.papper.ViewBuilder;
+import se.dromt.papper.ViewManager;
 import xyz.alto.debtfriend.R;
-import xyz.alto.debtfriend.friends.view.FriendsListView;
 import xyz.alto.debtfriend.login.view.LoginView;
-import xyz.alto.debtfriend.main.MainActivity;
 import xyz.alto.debtfriend.registration.view.RegistrationView;
-import xyz.alto.debtfriend.utils.Helper;
 
 /**
- * Created by Anton on 2015-10-10.
+ * Created by isak on 2015-10-27.
  */
 public class StartView extends LinearLayout implements OnOptionsMenuListener {
-
-
-    public StartView(Context context) {
-        super(context);
-        if(Helper.isLoggedIn(getContext())) {
-            LayoutInflater.from(context).inflate(R.layout.view_start, this, true);
-
-        } else {
-            LayoutInflater.from(context).inflate(R.layout.view_start_default, this, true);
-//            if(((MainActivity) context).getSupportActionBar().isShowing()) {
-//                ((MainActivity) context).getSupportActionBar().hide();
-//            }
-
-        }
-
-        ButterKnife.bind(this);
-    }
 
     public static class Builder extends ViewBuilder {
         @Override
@@ -53,23 +33,18 @@ public class StartView extends LinearLayout implements OnOptionsMenuListener {
         }
     }
 
-
-    @Override
-    public void onOptionsMenuCreated(Menu menu) {
-        new MenuInflater(getContext()).inflate(R.menu.menu_main, menu);
+    public StartView(Context context) {
+        super(context);
+        LayoutInflater.from(context).inflate(R.layout.view_start, this, true);
+        ButterKnife.bind(this);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return false;
-    }
-
-    public ViewManager getViewManager(Context context) {
+    private ViewManager getViewManager(Context context) {
         return ((PapperActivity) context).getViewManager();
     }
 
     @Nullable
-    @OnClick (R.id.view_start_default_button_register) void clickRegister() {
+    @OnClick(R.id.view_start_default_button_register) void clickRegister() {
         Log.d(getClass().getName(), "click!");
         getViewManager(getContext())
                 .addView(new RegistrationView.Builder());
@@ -82,8 +57,13 @@ public class StartView extends LinearLayout implements OnOptionsMenuListener {
                 .addView(new LoginView.Builder());
     }
 
-    @Nullable
-    @OnClick(R.id.view_start_button_friends) void clickFriends() {
-        getViewManager(getContext()).addView(new FriendsListView.Builder());
+    @Override
+    public void onOptionsMenuCreated(Menu menu) {
+        new MenuInflater(getContext()).inflate(R.menu.menu_start, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return false;
     }
 }

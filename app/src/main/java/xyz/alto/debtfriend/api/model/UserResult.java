@@ -2,7 +2,6 @@ package xyz.alto.debtfriend.api.model;
 
 import java.util.List;
 
-
 /**
  * Created by antonnyman on 30/10/15.
  */
