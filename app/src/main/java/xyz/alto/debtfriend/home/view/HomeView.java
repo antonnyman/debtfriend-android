@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.Currency;
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit.Call;
@@ -25,6 +28,7 @@ import se.dromt.papper.ViewBuilder;
 import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
 import xyz.alto.debtfriend.api.model.LogoutResult;
+import xyz.alto.debtfriend.debt.view.AddDebtView;
 import xyz.alto.debtfriend.friends.view.FriendsListView;
 import xyz.alto.debtfriend.login.view.LoginView;
 import xyz.alto.debtfriend.registration.view.RegistrationView;
@@ -40,6 +44,12 @@ public class HomeView extends LinearLayout implements OnOptionsMenuListener {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.view_home, this, true);
         ButterKnife.bind(this);
+
+
+        List<Currency> currencies = Helper.getAllCurrencies();
+        for(Currency c : currencies) {
+            Log.d("Currency", c.getCurrencyCode() + " " + c.getDisplayName() + " " + c.getSymbol());
+        }
     }
 
     public static class Builder extends ViewBuilder {
@@ -56,12 +66,12 @@ public class HomeView extends LinearLayout implements OnOptionsMenuListener {
 
 
     @Nullable
-    @OnClick(R.id.view_start_button_friends) void clickFriends() {
+    @OnClick(R.id.view_home_button_friends) void clickFriends() {
         getViewManager(getContext()).addView(new FriendsListView.Builder());
     }
 
     @Nullable
-    @OnClick(R.id.view_start_button_logout) void logout() {
+    @OnClick(R.id.view_home_button_logout) void logout() {
         Helper.clearKey(getContext());
         RestClient restClient = new RestClient();
 
@@ -81,6 +91,11 @@ public class HomeView extends LinearLayout implements OnOptionsMenuListener {
         });
 
         getViewManager(getContext()).addView(new StartView.Builder());
+    }
+
+    @Nullable
+    @OnClick(R.id.view_home_add_debt_fab) void addDebt(){
+        getViewManager(getContext()).addView(new AddDebtView.Builder());
     }
 
     @Override

@@ -14,8 +14,11 @@
     <string name="view_start_button_register">Register</string>
     <string name="view_start_button_login">Log in</string>
 
-    <!-- View start -->
+    <!-- View home -->
     <string name="view_start_button_add_friend">Add friend</string>
+    <string name="view_home_button_friends">Friends</string>
+
+    <!-- Debt -->
 
     <!-- Registration view -->
     <string name="view_registration_input_username">Username</string>

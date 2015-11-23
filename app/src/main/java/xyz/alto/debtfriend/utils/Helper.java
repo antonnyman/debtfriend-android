@@ -15,6 +15,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Currency;
+import java.util.List;
 
 import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.main.MainActivity;
@@ -167,4 +170,11 @@ public class Helper {
         v.startAnimation(fadeOutAnim);
         v.setVisibility(View.INVISIBLE);
     }
+
+    public static List<Currency> getAllCurrencies() {
+        List<Currency> allCurrencies = new ArrayList<>(Currency.getAvailableCurrencies());
+        return allCurrencies;
+    }
+
+
 }
