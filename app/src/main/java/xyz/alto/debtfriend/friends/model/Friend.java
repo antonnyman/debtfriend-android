@@ -91,4 +91,9 @@ public class Friend {
     public void setConfirmed(boolean confirmed) {
         this.confirmed = confirmed;
     }
+
+    @Override
+    public String toString() {
+        return username;
+    }
 }

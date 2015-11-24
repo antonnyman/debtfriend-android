@@ -1,4 +1,4 @@
-package xyz.alto.debtfriend.api.model;
+package xyz.alto.debtfriend.api.result;
 
 import java.util.Date;
 import java.util.List;

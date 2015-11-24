@@ -43,10 +43,19 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_attach_money_black_18dp"/>
 
-        <Spinner
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/view_add_debt_input_currency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/view_add_debt_currency" />
+            android:paddingLeft="16dp">
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/view_add_debt_currency"
+                android:hint="Currency"
+                android:spinnerMode="dialog" />
+        </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 
@@ -77,12 +86,25 @@
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_add_debt_friends_list" />
+
+    <Button
+        android:id="@+id/view_add_debt_button_add_friend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add friend"
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_gravity="left" />
+
     <Button
         android:id="@+id/view_add_debt_button_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Next"
-        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
         android:layout_gravity="right" />
 
 

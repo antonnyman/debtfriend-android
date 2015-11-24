@@ -1,6 +1,8 @@
-package xyz.alto.debtfriend.api.model;
+package xyz.alto.debtfriend.api.result;
 
 import java.util.List;
+
+import xyz.alto.debtfriend.api.model.User;
 
 /**
  * Created by antonnyman on 30/10/15.

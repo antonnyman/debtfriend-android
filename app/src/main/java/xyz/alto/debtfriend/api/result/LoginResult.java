@@ -1,4 +1,4 @@
-package xyz.alto.debtfriend.api.model;
+package xyz.alto.debtfriend.api.result;
 
 /**
  * Created by antonnyman on 19/10/15.

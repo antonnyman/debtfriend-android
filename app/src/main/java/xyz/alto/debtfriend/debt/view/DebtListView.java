@@ -17,7 +17,7 @@ import retrofit.Response;
 import retrofit.Retrofit;
 import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
-import xyz.alto.debtfriend.api.model.DebtsResult;
+import xyz.alto.debtfriend.api.result.DebtsResult;
 import xyz.alto.debtfriend.debt.adapter.DebtListAdapter;
 import xyz.alto.debtfriend.debt.model.Debt;
 import xyz.alto.debtfriend.utils.Helper;

@@ -30,7 +30,7 @@ import se.dromt.papper.ViewBuilder;
 import se.dromt.papper.ViewManager;
 import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
-import xyz.alto.debtfriend.api.model.LoginResult;
+import xyz.alto.debtfriend.api.result.LoginResult;
 import xyz.alto.debtfriend.api.model.User;
 import xyz.alto.debtfriend.home.view.HomeView;
 import xyz.alto.debtfriend.utils.Helper;

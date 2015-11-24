@@ -6,13 +6,15 @@ import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Path;
-import xyz.alto.debtfriend.api.model.AddRemoveFriendResult;
-import xyz.alto.debtfriend.api.model.DebtsResult;
-import xyz.alto.debtfriend.api.model.FriendsResult;
-import xyz.alto.debtfriend.api.model.LoginResult;
-import xyz.alto.debtfriend.api.model.LogoutResult;
-import xyz.alto.debtfriend.api.model.RegistrationResult;
+import xyz.alto.debtfriend.api.result.AddDebtResult;
+import xyz.alto.debtfriend.api.result.AddRemoveFriendResult;
+import xyz.alto.debtfriend.api.result.DebtsResult;
+import xyz.alto.debtfriend.api.result.FriendsResult;
+import xyz.alto.debtfriend.api.result.LoginResult;
+import xyz.alto.debtfriend.api.result.LogoutResult;
+import xyz.alto.debtfriend.api.result.RegistrationResult;
 import xyz.alto.debtfriend.api.model.User;
+import xyz.alto.debtfriend.debt.model.Debt;
 
 /**
  * Created by Anton on 2015-10-10.
@@ -50,6 +52,11 @@ public interface AltoService {
     @Headers({"Accept: application/json", "Content-type: application/json"})
     @GET("/api/friend/remove/{id}/{key}")
     Call<AddRemoveFriendResult> removeFriend(@Path("id") int id, @Path("key") String key);
+
+    // DEBT
+    @Headers({"Accept: application/json", "Content-type: application/json"})
+    @POST("/api/register")
+    Call<AddDebtResult> addDebt(@Body Debt debt);
 
 
 }
