@@ -42,11 +42,6 @@ public class HomeView extends LinearLayout implements OnOptionsMenuListener {
         LayoutInflater.from(context).inflate(R.layout.view_home, this, true);
         ButterKnife.bind(this);
 
-
-        List<Currency> currencies = Helper.getAllCurrencies();
-        for(Currency c : currencies) {
-            Log.d("Currency", c.getCurrencyCode() + " " + c.getDisplayName() + " " + c.getSymbol());
-        }
     }
 
     public static class Builder extends ViewBuilder {

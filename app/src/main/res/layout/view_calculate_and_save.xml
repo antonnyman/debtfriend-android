@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_calculate_and_save_list" />
+
+    <RadioGroup
+        android:id="@+id/view_calculate_and_save_radiogroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <RadioButton
+            android:id="@+id/view_calculate_and_save_I_owe_them"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I owe them" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="They owe me"
+            android:id="@+id/view_calculate_and_save_they_owe_me" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/view_calculate_and_save_total" />
+
+    <Button
+        android:id="@+id/view_calculate_and_save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:layout_gravity="right" />
+
+
+</LinearLayout>

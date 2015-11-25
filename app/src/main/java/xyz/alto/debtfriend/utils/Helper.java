@@ -18,6 +18,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.main.MainActivity;
@@ -172,8 +173,11 @@ public class Helper {
     }
 
     public static List<Currency> getAllCurrencies() {
-        List<Currency> allCurrencies = new ArrayList<>(Currency.getAvailableCurrencies());
-        return allCurrencies;
+        return new ArrayList<>(Currency.getAvailableCurrencies());
+    }
+
+    public static String myCurrency() {
+        return Currency.getInstance(Locale.getDefault()) + "";
     }
 
 
