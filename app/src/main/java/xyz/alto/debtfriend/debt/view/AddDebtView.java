@@ -124,8 +124,6 @@ public class AddDebtView extends LinearLayout {
             mUsernames.add(f.getUsername());
         }
 
-        Log.d("Musernames", mUsernames.size() + "");
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setItems(mUsernames.toArray(new String[mUsernames.size()]), new DialogInterface.OnClickListener() {
             @Override
@@ -156,8 +154,6 @@ public class AddDebtView extends LinearLayout {
                     Helper.toast(getContext(), "API not running.");
                 } else {
                     for (Friend f : response.body().getResult()) {
-
-                        Log.d("Ma bro", f.getUsername());
                         friendList.add(new Friend(f.getId(), f.getUsername(), f.getEmail(), f.getLastLoggedIn(), f.getRegisteredOn(), f.getConfirmedOn(), f.isAdmin(), f.isConfirmed()));
                     }
                 }
@@ -183,7 +179,6 @@ public class AddDebtView extends LinearLayout {
 
                 if(Helper.getAllCurrencies().get(i).getCurrencyCode().equalsIgnoreCase(Helper.myCurrency())) {
                     currencyPos = i;
-                    Log.d("Currency pos", currencyPos + "");
                 }
             }
             return null;

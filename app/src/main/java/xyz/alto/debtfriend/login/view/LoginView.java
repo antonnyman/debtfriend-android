@@ -141,8 +141,10 @@ public class LoginView extends LinearLayout implements OnOptionsMenuListener {
                         Log.d("The KEY", response.body().getKey());
                         Helper.storeString(getContext(), "key", response.body().getKey());
                         Helper.storeBoolean(getContext(), "isLoggedIn", true);
+                        Helper.saveMe(getContext(), response.body().getKey());
                         getViewManager(getContext()).addView(new HomeView.Builder());
                     }
+
 
                 }
 

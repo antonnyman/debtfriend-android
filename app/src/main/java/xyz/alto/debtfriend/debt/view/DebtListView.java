@@ -61,7 +61,7 @@ public class DebtListView extends LinearLayout {
             @Override
             public void onResponse(Response<DebtsResult> response, Retrofit retrofit) {
                 for(Debt d : response.body().getResult()) {
-                    debts.add(new Debt(d.getId(), d.getOwner(), d.getReceiver(), d.getAmount(), d.getDate(), d.getDescription()));
+                    debts.add(new Debt(d.getId(), d.getOwner(), d.getReceiver(), d.getAmount(), d.getCurrency(), d.getDate(), d.getDescription()));
                 }
 
                 mDebtListAdapter.notifyDataSetChanged();

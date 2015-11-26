@@ -10,14 +10,23 @@ public class Debt {
     int id, owner, receiver;
     float amount;
     Date date;
-    String description;
+    String currency, description;
 
-    public Debt(int id, int owner, int receiver, float amount, Date date, String description) {
+    public Debt(int id, int owner, int receiver, float amount, String currency, Date date, String description) {
         this.id = id;
         this.owner = owner;
         this.receiver = receiver;
         this.amount = amount;
+        this.currency = currency;
         this.date = date;
+        this.description = description;
+    }
+
+    public Debt(int owner, int receiver, float amount, String currency, String description) {
+        this.owner = owner;
+        this.receiver = receiver;
+        this.amount = amount;
+        this.currency = currency;
         this.description = description;
     }
 
@@ -60,6 +69,8 @@ public class Debt {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public String getCurrency() { return currency; }
 
     public String getDescription() {
         return description;

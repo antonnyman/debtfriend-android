@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,18 +17,33 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 import xyz.alto.debtfriend.R;
+import xyz.alto.debtfriend.api.RestClient;
+import xyz.alto.debtfriend.api.model.User;
+import xyz.alto.debtfriend.api.result.UserResult;
+import xyz.alto.debtfriend.friends.model.Friend;
+import xyz.alto.debtfriend.friends.model.Me;
 import xyz.alto.debtfriend.main.MainActivity;
 
 /**
  * Created by antonnyman on 2015-10-12.
  */
 public class Helper {
+
+    public static DateFormat format = SimpleDateFormat.getDateInstance();
 
     public static void toast(Context context, String string) {
         Toast.makeText(context, string, Toast.LENGTH_LONG).show();
@@ -143,6 +160,60 @@ public class Helper {
         SharedPreferences sharedPreferences = context.getSharedPreferences(Static.SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
+    }
+
+
+    public static void saveMe(final Context context, String key) {
+        RestClient restClient = new RestClient();
+        Call<UserResult> call = restClient.getAltoService().getUser(key);
+        call.enqueue(new Callback<UserResult>() {
+            @Override
+            public void onResponse(Response<UserResult> response, Retrofit retrofit) {
+                SharedPreferences sharedPreferences = context.getSharedPreferences(Static.SHARED_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("id", response.body().getResult().getId());
+                editor.putString("username", response.body().getResult().getUsername());
+                editor.putString("email", response.body().getResult().getEmail());
+                editor.putString("lastLoggedIn", response.body().getResult().getLastLoggedIn().toString());
+                editor.putString("registeredOn", response.body().getResult().getRegisteredOn().toString());
+                editor.putString("confirmedOn", response.body().getResult().getConfirmedOn().toString());
+                editor.putBoolean("admin", response.body().getResult().isAdmin());
+                editor.putBoolean("confirmed", response.body().getResult().isConfirmed());
+                editor.apply();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public static Me getMe(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Static.SHARED_PREFS, Context.MODE_PRIVATE);
+
+        Date lastLoggedIn = null;
+        Date registeredOn = null;
+        Date confirmedOn = null;
+        try {
+            lastLoggedIn = format.parse(sharedPreferences.getString("lastLoggedIn", ""));
+            registeredOn = format.parse(sharedPreferences.getString("registeredOn", ""));
+            confirmedOn = format.parse(sharedPreferences.getString("confirmedOn", ""));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return new Me(
+                    sharedPreferences.getInt("id", 0),
+                    sharedPreferences.getString("username", ""),
+                    sharedPreferences.getString("email", ""),
+                    lastLoggedIn,
+                    registeredOn,
+                    confirmedOn,
+                    sharedPreferences.getBoolean("admin", false),
+                    sharedPreferences.getBoolean("confirmed", false)
+            );
+
     }
 
     public static boolean fileExists(Context context, String filename) {

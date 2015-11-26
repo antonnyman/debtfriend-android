@@ -14,7 +14,9 @@ import xyz.alto.debtfriend.api.result.LoginResult;
 import xyz.alto.debtfriend.api.result.LogoutResult;
 import xyz.alto.debtfriend.api.result.RegistrationResult;
 import xyz.alto.debtfriend.api.model.User;
+import xyz.alto.debtfriend.api.result.UserResult;
 import xyz.alto.debtfriend.debt.model.Debt;
+import xyz.alto.debtfriend.friends.model.Friend;
 
 /**
  * Created by Anton on 2015-10-10.
@@ -38,6 +40,10 @@ public interface AltoService {
     Call<FriendsResult> getFriends(@Path("key") String key);
 
     @Headers({"Accept: application/json", "Content-type: application/json"})
+    @GET("/api/users/get/{key}")
+    Call<UserResult> getUser(@Path("key") String key);
+
+    @Headers({"Accept: application/json", "Content-type: application/json"})
     @GET("/api/friends/all/{key}")
     Call<DebtsResult> getDebts(@Path("key") String key);
 
@@ -55,8 +61,8 @@ public interface AltoService {
 
     // DEBT
     @Headers({"Accept: application/json", "Content-type: application/json"})
-    @POST("/api/register")
-    Call<AddDebtResult> addDebt(@Body Debt debt);
+    @POST("/api/debt/add/{key}")
+    Call<AddDebtResult> addDebt(@Path("key") String key, @Body Debt debt);
 
 
 }
