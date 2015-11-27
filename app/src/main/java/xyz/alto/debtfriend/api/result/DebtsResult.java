@@ -10,17 +10,17 @@ import xyz.alto.debtfriend.debt.model.Debt;
  */
 public class DebtsResult {
 
-    List<Debt> result;
+    List<Debt> debts;
 
-    public DebtsResult(List<Debt> result) {
-        this.result = result;
+    public DebtsResult(List<Debt> debts) {
+        this.debts = debts;
     }
 
-    public List<Debt> getResult() {
-        return result;
+    public List<Debt> getDebts() {
+        return debts;
     }
 
-    public void setResult(List<Debt> result) {
-        this.result = result;
+    public void setDebts(List<Debt> debts) {
+        this.debts = debts;
     }
 }

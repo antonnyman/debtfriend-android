@@ -20,7 +20,7 @@ import xyz.alto.debtfriend.debt.model.Debt;
 public class DebtListAdapter extends RecyclerView.Adapter<DebtListAdapter.ViewHolder> {
 
     private List<Debt> mDebts;
-    private DateFormat mDateFormat =  DateFormat.getDateTimeInstance();
+    private DateFormat mDateFormat = DateFormat.getDateTimeInstance();
 
     public DebtListAdapter(List<Debt> mDebts) {
         this.mDebts = mDebts;
@@ -34,8 +34,8 @@ public class DebtListAdapter extends RecyclerView.Adapter<DebtListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.owner.setText(mDebts.get(position).getOwner());
-        holder.receiver.setText(mDebts.get(position).getReceiver());
+        holder.owner.setText(mDebts.get(position).getOwnerUsername());
+        holder.receiver.setText(mDebts.get(position).getReceiverUsername());
         holder.amount.setText(mDebts.get(position).getAmount() + "");
         holder.date.setText(mDateFormat.format(mDebts.get(position).getDate()));
         holder.description.setText(mDebts.get(position).getDescription());
@@ -56,7 +56,7 @@ public class DebtListAdapter extends RecyclerView.Adapter<DebtListAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this.itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

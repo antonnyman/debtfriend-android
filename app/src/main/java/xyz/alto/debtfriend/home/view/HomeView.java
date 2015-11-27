@@ -28,6 +28,7 @@ import xyz.alto.debtfriend.R;
 import xyz.alto.debtfriend.api.RestClient;
 import xyz.alto.debtfriend.api.result.LogoutResult;
 import xyz.alto.debtfriend.debt.view.AddDebtView;
+import xyz.alto.debtfriend.debt.view.DebtListView;
 import xyz.alto.debtfriend.friends.view.FriendsListView;
 import xyz.alto.debtfriend.start.view.StartView;
 import xyz.alto.debtfriend.utils.Helper;
@@ -58,8 +59,13 @@ public class HomeView extends LinearLayout implements OnOptionsMenuListener {
 
 
     @Nullable
-    @OnClick(R.id.view_home_button_friends) void clickFriends() {
+    @OnClick(R.id.view_home_button_friends) void friends() {
         getViewManager(getContext()).addView(new FriendsListView.Builder());
+    }
+
+    @Nullable
+    @OnClick(R.id.view_home_button_debts) void debts() {
+        getViewManager(getContext()).addView(new DebtListView.Builder());
     }
 
     @Nullable

@@ -148,7 +148,6 @@ public class FriendsListView extends LinearLayout implements OnOptionsMenuListen
                     Helper.toast(getContext(), "API not running.");
                 } else {
                     for (Friend f : response.body().getResult()) {
-
                         Log.d("Ma bro", f.getUsername());
                         friendList.add(new Friend(f.getId(), f.getUsername(), f.getEmail(), f.getLastLoggedIn(), f.getRegisteredOn(), f.getConfirmedOn(), f.isAdmin(), f.isConfirmed()));
                     }

@@ -44,8 +44,8 @@ public interface AltoService {
     Call<UserResult> getUser(@Path("key") String key);
 
     @Headers({"Accept: application/json", "Content-type: application/json"})
-    @GET("/api/friends/all/{key}")
-    Call<DebtsResult> getDebts(@Path("key") String key);
+    @GET("/api/users/get/{id}/{key}")
+    Call<UserResult> getUserById(@Path("id") int id, @Path("key") String key);
 
     @Headers({"Accept: application/json", "Content-type: application/json"})
     @GET("/api/users/find/{username}")
@@ -63,6 +63,10 @@ public interface AltoService {
     @Headers({"Accept: application/json", "Content-type: application/json"})
     @POST("/api/debt/add/{key}")
     Call<AddDebtResult> addDebt(@Path("key") String key, @Body Debt debt);
+
+    @Headers({"Accept: application/json", "Content-type: application/json"})
+    @GET("/api/debt/owner/all/{key}")
+    Call<DebtsResult> getDebts(@Path("key") String key);
 
 
 }
